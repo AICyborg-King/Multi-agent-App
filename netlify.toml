@@ -1,14 +1,13 @@
 [build]
-  # Explicitly install using legacy-peer-deps to avoid conflict errors
-  command = "npm install --legacy-peer-deps && npm run build"
+  command = "npm install && npm run build"
   publish = "dist"
 
 [build.environment]
   NODE_VERSION = "20"
-  # CRITICAL: Fixes 'Failed during stage preparing repo' by skipping LFS download
+  # This specific flag stops Netlify from hanging on 'preparing repo'
   GIT_LFS_SKIP_SMUDGE = "1"
   NETLIFY_LFS_DISABLED = "true"
-  # Redundant check to ensure npm is lenient
+  # Ensure we can install dependencies without conflicts
   NPM_CONFIG_LEGACY_PEER_DEPS = "true"
 
 [[redirects]]
