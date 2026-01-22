@@ -4,7 +4,8 @@
 
 [build.environment]
   NODE_VERSION = "20"
-  
+  NPM_FLAGS = "--no-package-lock --legacy-peer-deps"
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
