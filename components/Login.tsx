@@ -14,7 +14,7 @@ const Login: React.FC = () => {
              <Cpu className="w-8 h-8 text-white" />
           </div>
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white tracking-tight">OmniChat AI</h1>
-          <p className="text-gray-500 dark:text-gray-400">Next-gen multi-agent intelligence</p>
+          <p className="text-gray-500 dark:text-gray-400">Next-gen multi-agent intelligence v1.0</p>
         </div>
 
         <div className="space-y-4">
