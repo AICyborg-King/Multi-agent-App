@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowRightLeft, Copy, Globe, Languages } from 'lucide-react';
 import { GoogleGenAI } from '@google/genai';
-import { GEMINI_API_KEY, MODEL_TEXT } from '../constants';
+import { MODEL_TEXT } from '../constants';
 
 const Translator: React.FC = () => {
   const [inputText, setInputText] = useState('');
@@ -16,7 +16,7 @@ const Translator: React.FC = () => {
 
     setIsTranslating(true);
     try {
-      const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
+      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
       const prompt = `Translate the following text to ${targetLang}. Return ONLY the translated text, nothing else.\n\nText: "${inputText}"`;
 
       const response = await ai.models.generateContent({

@@ -1,4 +1,3 @@
-export const GEMINI_API_KEY = process.env.API_KEY || '';
 
 // Models
 export const MODEL_TEXT = 'gemini-3-flash-preview';

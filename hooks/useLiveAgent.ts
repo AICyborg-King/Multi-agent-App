@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { GoogleGenAI, LiveServerMessage, Modality } from '@google/genai';
-import { GEMINI_API_KEY, MODEL_VOICE, SAMPLE_RATE_INPUT, SAMPLE_RATE_OUTPUT } from '../constants';
-import { createPcmBlob, decodeAudioData } from '../utils/audio';
+import { MODEL_VOICE, SAMPLE_RATE_INPUT, SAMPLE_RATE_OUTPUT } from '../constants';
+import { createPcmBlob, decodeAudioData, base64ToUint8Array } from '../utils/audio';
 import { ConnectionState } from '../types';
 
 export const useLiveAgent = () => {
@@ -25,7 +25,8 @@ export const useLiveAgent = () => {
   const cleanupRef = useRef<(() => void) | null>(null);
 
   const connect = useCallback(async () => {
-    if (!GEMINI_API_KEY) {
+    // API Key must be accessed directly from process.env.API_KEY
+    if (!process.env.API_KEY) {
       setError("API Key missing");
       return;
     }
@@ -45,7 +46,8 @@ export const useLiveAgent = () => {
       // Microphone Stream
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       
-      const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
+      // Initialize Gemini client with process.env.API_KEY directly
+      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
       
       // Setup Live Session
       sessionPromiseRef.current = ai.live.connect({
@@ -163,17 +165,6 @@ export const useLiveAgent = () => {
     
     setConnectionState(ConnectionState.DISCONNECTED);
   }, []);
-
-  // Helper for base64 decode needed inside component if not importing
-  const base64ToUint8Array = (base64: string) => {
-    const binaryString = atob(base64);
-    const len = binaryString.length;
-    const bytes = new Uint8Array(len);
-    for (let i = 0; i < len; i++) {
-      bytes[i] = binaryString.charCodeAt(i);
-    }
-    return bytes;
-  }
 
   // Visualization loop
   useEffect(() => {

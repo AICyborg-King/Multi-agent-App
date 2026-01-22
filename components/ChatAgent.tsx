@@ -6,7 +6,7 @@ import {
 } from 'lucide-react';
 import { GoogleGenAI } from '@google/genai';
 import ReactMarkdown from 'react-markdown';
-import { GEMINI_API_KEY, MODEL_TEXT } from '../constants';
+import { MODEL_TEXT } from '../constants';
 import { Message, AgentType } from '../types';
 
 interface ChatAgentProps {
@@ -101,7 +101,8 @@ const ChatAgent: React.FC<ChatAgentProps> = ({ mode }) => {
     setIsTyping(true);
 
     try {
-      const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
+      // Use process.env.API_KEY directly
+      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
       
       let contents: any;
       
@@ -123,7 +124,8 @@ const ChatAgent: React.FC<ChatAgentProps> = ({ mode }) => {
       }
 
       const response = await ai.models.generateContent({
-        model: isWhatsapp && currentImage ? 'gemini-2.5-flash-image' : MODEL_TEXT,
+        // gemini-3-flash-preview (MODEL_TEXT) supports multimodal input and is better for reasoning than gemini-2.5-flash-image
+        model: MODEL_TEXT,
         contents: contents,
       });
 
