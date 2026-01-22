@@ -1,0 +1,7 @@
+{
+  "name": "OmniChat AI",
+  "description": "A multi-agent AI platform featuring real-time voice conversations, WhatsApp-style messaging, instant translation, and secure Google-synced authentication.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
