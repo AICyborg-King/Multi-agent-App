@@ -1,13 +1,13 @@
 [build]
-  # We combine install and build to ensure we control the flags exactly
-  command = "npm install --no-package-lock --legacy-peer-deps && npm run build"
+  command = "npm install && npm run build"
   publish = "dist"
 
 [build.environment]
   NODE_VERSION = "20"
-  # This fixes the 'preparing repo' hang by skipping LFS downloads
+  # CRITICAL: Skip downloading LFS files during clone to prevent timeouts
   GIT_LFS_SKIP_SMUDGE = "1"
-  # Ensure legacy peer deps is set at the environment level
+  NETLIFY_LFS_DISABLED = "true"
+  # Use legacy peer deps for npm install
   NPM_CONFIG_LEGACY_PEER_DEPS = "true"
 
 [[redirects]]
