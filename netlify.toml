@@ -1,13 +1,14 @@
 [build]
-  command = "npm install && npm run build"
+  # Explicitly install using legacy-peer-deps to avoid conflict errors
+  command = "npm install --legacy-peer-deps && npm run build"
   publish = "dist"
 
 [build.environment]
   NODE_VERSION = "20"
-  # CRITICAL: Skip downloading LFS files during clone to prevent timeouts
+  # CRITICAL: Fixes 'Failed during stage preparing repo' by skipping LFS download
   GIT_LFS_SKIP_SMUDGE = "1"
   NETLIFY_LFS_DISABLED = "true"
-  # Use legacy peer deps for npm install
+  # Redundant check to ensure npm is lenient
   NPM_CONFIG_LEGACY_PEER_DEPS = "true"
 
 [[redirects]]
